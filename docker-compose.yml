@@ -39,4 +39,4 @@ services:
         restart: always
         environment:
             - NODE_ENV=development
-        command: npm start
+        command: "npm start"
