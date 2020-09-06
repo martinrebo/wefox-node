@@ -3,7 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const jwt = require("jsonwebtoken");
-
+const mongoose = require('mongoose')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -11,6 +11,10 @@ const oauthRouter = require('./routes/oauth');
 const addressRouter = require('./routes/address')
 
 const authenticate = require('./middleware/authenticate')
+
+mongoose.connect('mongodb://mongo:27017/wefox-node', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Now connected to MongoDB!'))
+    .catch(err => console.error('Something went wrong', err));
 
 const app = express();
 
