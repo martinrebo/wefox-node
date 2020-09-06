@@ -4,6 +4,10 @@ const dotenv = require("dotenv").config();
 const fetch = require('node-fetch');
 
 
+//TODO: Refactor DRY - Use util modules for fetch requests
+//TODO: Address req should be an object instead of a string
+
+
 /* Add an endpoint that receives an address and validate if its valid. This address must be in an
 object with the properties street, streetNumber, town, postalCode and country. */
 router.post('/validate', function (req, res, next) {
@@ -64,6 +68,7 @@ router.post('/checker', function (req, res, next) {
 
   const geoAPI = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GEO_API_KEY}`
 
+  // TODO: Refactor for a cleaner async fetch 
   const validateAddress = async url => {
     try {
       const response = await fetch(url)
@@ -77,11 +82,9 @@ router.post('/checker', function (req, res, next) {
 
   validateAddress(geoAPI)
     .then(coordinates => {
-      console.log(coordinates)
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lng}&appid=${process.env.WEATHER_API_KEY}`)
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           res.send(data)
         })
     })
