@@ -8,9 +8,14 @@ function authenticate(req, res, next) {
     if (token == null) return res.sendStatus(401) // if there isn't any token
   
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      console.log(err)
       if (err) return res.sendStatus(403)
+      
+      // retrieve userId and token from Redis
+      
+      // if the userId of the request is the same as the token 
+
       req.user = user
+      
       next() // pass the execution off to whatever request the client intended
     })
   }

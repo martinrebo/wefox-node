@@ -11,10 +11,22 @@ const oauthRouter = require('./routes/oauth');
 const addressRouter = require('./routes/address')
 
 const authenticate = require('./middleware/authenticate')
+const client = require('./redis/client')
+
 
 mongoose.connect('mongodb://mongo:27017/wefox-node', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
-    .catch(err => console.error('Something went wrong', err));
+    .catch(err => console.error('MongoDB: Something went wrong', err));
+
+
+client.on('connect', ()=>{
+    console.log("Now connected to Redis")
+})
+client.on('error', (err)=>{
+    console.log("Redis: Something went wrong", err)
+})
+
+
 
 const app = express();
 

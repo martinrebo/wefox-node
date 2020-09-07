@@ -23,4 +23,7 @@ const User = mongoose.model('User', new mongoose.Schema({
     }
 }));
  
+
+//TODO: Add JOI validation 
+
 exports.User = User;
